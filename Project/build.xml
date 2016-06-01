@@ -1,0 +1,38 @@
+<project default="run">
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes"/>
+    </target>
+
+    <target name="jarserver" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/NapsterServerClass.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="server.NapsterServerClass"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="jarclient" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/ClientOfNapster.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="client.ClientOfNapster"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="runserver" depends="jarserver">
+        <java jar="build/jar/NapsterServerClass.jar" fork="true"/>
+    </target>
+
+    <target name="runclient" depends="jarclient">
+        <java jar="build/jar/ClientOfNapster.jar" fork="true"/>
+    </target>
+
+</project>
